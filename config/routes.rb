@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :portfolios
-  get "pages/home"
-  get "pages/about"
-  get "pages/contact"
+  devise_for :users, path: '', path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
+  resources :portfolios, except: [:show]
+  get 'portfolio/:id', to: 'portfolios#show', as: 'portfolio_show'
+
+  get 'about-me', to: 'pages#about'
+  get 'contact', to: 'pages#contact'
+
   resources :blogs
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -16,4 +19,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root to: 'pages#home'
 end
